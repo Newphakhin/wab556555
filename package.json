@@ -1,0 +1,11 @@
+{
+  "name": "lab-room-booking",
+  "version": "1.0.0",
+  "description": "Simple Booking System for Lab Room - ระบบจองห้องปฏิบัติการ สาขาวิศวกรรมคอมพิวเตอร์",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "npx -y serve .",
+    "test": "node tests/overlap.test.js && node tests/service.test.js"
+  }
+}

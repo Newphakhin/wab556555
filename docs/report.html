@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เล่มรายงานโปรเจกต์ — Simple Booking System for Lab Room (นาย ภคิน ภารสมบูรณ์)</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #eff6ff;
+      --accent: #2563eb;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --bg-soft: #f8fafc;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 18mm 16mm 18mm 18mm;
+    }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      font-size: 11pt;
+      line-height: 1.62;
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Prompt', 'Sarabun', sans-serif;
+      color: var(--primary);
+      margin-top: 0;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    p {
+      margin: 0 0 0.65rem 0;
+      text-align: justify;
+    }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      height: 236mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      border: 3px double var(--primary);
+      padding: 14mm 14mm 12mm 14mm;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-family: 'Prompt', sans-serif;
+      font-weight: 600;
+      font-size: 10.5pt;
+      border: 1px solid #bfdbfe;
+      margin-bottom: 12px;
+    }
+
+    .cover-logo {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .cover-title-en {
+      font-family: 'Prompt', sans-serif;
+      font-size: 22pt;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 8px 0 6px;
+      line-height: 1.25;
+    }
+
+    .cover-title-th {
+      font-family: 'Prompt', sans-serif;
+      font-size: 15.5pt;
+      font-weight: 600;
+      color: #1e293b;
+      margin: 0 0 8px;
+    }
+
+    .cover-subtitle {
+      font-size: 12pt;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .cover-divider {
+      width: 120px;
+      height: 4px;
+      background: var(--accent);
+      margin: 14px auto;
+      border-radius: 2px;
+    }
+
+    .cover-meta-box {
+      margin: 16px auto;
+      max-width: 460px;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 24px;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .cover-meta-row {
+      display: grid;
+      grid-template-columns: 145px 1fr;
+      padding: 7px 0;
+      border-bottom: 1px dashed #e2e8f0;
+      font-size: 11.5pt;
+    }
+
+    .cover-meta-row:last-child {
+      border-bottom: none;
+    }
+
+    .cover-meta-label {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .cover-footer {
+      font-family: 'Prompt', sans-serif;
+      font-size: 11pt;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* Chapter Headings */
+    .chapter-header {
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+      padding: 12px 16px;
+      border-left: 6px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .chapter-header .ch-num {
+      font-family: 'Prompt', sans-serif;
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+    }
+
+    .chapter-header h1 {
+      font-size: 16.5pt;
+      margin: 2px 0 0 0;
+      color: var(--primary);
+    }
+
+    h2 {
+      font-size: 13pt;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #dbeafe;
+      color: #1e3a8a;
+    }
+
+    h3 {
+      font-size: 11.5pt;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px 0;
+      font-size: 10pt;
+      page-break-inside: auto;
+    }
+
+    tr {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      font-family: 'Prompt', sans-serif;
+      font-weight: 600;
+      font-size: 9.8pt;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .table-caption {
+      font-family: 'Prompt', sans-serif;
+      font-size: 10pt;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 10px 0 4px 0;
+      page-break-after: avoid;
+    }
+
+    /* Callouts & Boxes */
+    .info-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 10px 0 14px 0;
+      page-break-inside: avoid;
+    }
+
+    .formula-box {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11pt;
+      padding: 14px 18px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 12px 0;
+      border: 2px solid #3b82f6;
+      page-break-inside: avoid;
+    }
+
+    /* Code blocks */
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.6pt;
+      line-height: 1.48;
+      padding: 11px 14px;
+      border-radius: 7px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 8px 0 14px 0;
+      border: 1px solid #334155;
+      page-break-inside: avoid;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.2pt;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 8.8pt;
+      font-weight: 600;
+      font-family: 'Prompt', sans-serif;
+    }
+    .b-pending { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .b-approved { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .b-rejected { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .b-cancelled { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .b-pass { background: #dcfce7; color: #166534; }
+
+    /* Lists */
+    ul, ol {
+      margin: 4px 0 10px 0;
+      padding-left: 22px;
+    }
+    li {
+      margin-bottom: 3px;
+    }
+
+    /* Figures & Screenshots */
+    .figure-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      margin: 12px 0 16px 0;
+      background: #ffffff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      text-align: center;
+    }
+
+    .figure-card img {
+      width: 100%;
+      max-height: 92mm;
+      object-fit: contain;
+      border-radius: 5px;
+      border: 1px solid #e2e8f0;
+      background: #070a16;
+    }
+
+    .figure-caption {
+      font-family: 'Prompt', sans-serif;
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 6px;
+    }
+
+    .figure-desc {
+      font-size: 9.5pt;
+      color: var(--muted);
+      margin-top: 2px;
+      text-align: left;
+    }
+
+    /* TOC */
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dotted #cbd5e1;
+      font-size: 10.8pt;
+    }
+    .toc-list li.toc-ch {
+      font-family: 'Prompt', sans-serif;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 8px;
+      border-bottom: 1px solid #dbeafe;
+    }
+    .toc-list li.toc-sub {
+      padding-left: 20px;
+      color: #334155;
+    }
+
+    /* Diagrams */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+    .arch-box {
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #f8fafc;
+    }
+    .arch-box h4 {
+      margin: 0 0 6px 0;
+      font-size: 10.5pt;
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+    .arch-box ul {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 9.5pt;
+    }
+
+    .workflow-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin: 8px 0 14px 0;
+      page-break-inside: avoid;
+    }
+    .wf-step {
+      background: var(--primary-light);
+      border: 1px solid #93c5fd;
+      color: var(--primary);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 9.5pt;
+      font-weight: 600;
+    }
+    .wf-arrow {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      page-break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== หน้าปก (COVER PAGE) ==================== -->
+  <section class="cover-page">
+    <div>
+      <div class="cover-logo">🧪</div>
+      <div class="cover-badge">เอกสารรายงานโปรเจกต์และข้อกำหนดความต้องการซอฟต์แวร์ (SRS &amp; Project Report)</div>
+      <h1 class="cover-title-en">Simple Booking System for Lab Room</h1>
+      <div class="cover-title-th">ระบบจองห้องปฏิบัติการ สำหรับสาขาวิชาวิศวกรรมคอมพิวเตอร์</div>
+      <div class="cover-subtitle">สาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์ (Kalasin University)</div>
+      <div class="cover-divider"></div>
+    </div>
+
+    <div class="cover-meta-box">
+      <div class="cover-meta-row">
+        <div class="cover-meta-label">ผู้จัดทำ</div>
+        <div><strong>นาย ภคิน ภารสมบูรณ์</strong></div>
+      </div>
+      <div class="cover-meta-row">
+        <div class="cover-meta-label">อาจารย์ประจำวิชา</div>
+        <div><strong>อาจารย์ วรพจน์ สมมูล</strong></div>
+      </div>
+      <div class="cover-meta-row">
+        <div class="cover-meta-label">สาขาวิชา</div>
+        <div>วิศวกรรมคอมพิวเตอร์ (Computer Engineering)</div>
+      </div>
+      <div class="cover-meta-row">
+        <div class="cover-meta-label">สถาบันการศึกษา</div>
+        <div>มหาวิทยาลัยกาฬสินธุ์ (Kalasin University)</div>
+      </div>
+      <div class="cover-meta-row">
+        <div class="cover-meta-label">เทคโนโลยีที่ใช้</div>
+        <div>HTML5, CSS3, JavaScript (ES Modules), IndexedDB, Chart.js</div>
+      </div>
+      <div class="cover-meta-row">
+        <div class="cover-meta-label">GitHub Repository</div>
+        <div><a href="https://github.com/Newphakhin/esfsdfsdf" style="color:var(--accent);text-decoration:none;word-break:break-all;">https://github.com/Newphakhin/esfsdfsdf</a></div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <strong>รายงานนี้เป็นส่วนหนึ่งของการพัฒนาเว็บแอปพลิเคชันตามข้อกำหนด SRS (โปรเจกต์ระยะเวลา 2 สัปดาห์)</strong><br />
+      สาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์<br />
+      ปีการศึกษา 2569
+    </div>
+  </section>
+
+  <!-- ==================== บทคัดย่อ & สารบัญ ==================== -->
+  <section class="page-break">
+    <div class="chapter-header">
+      <span class="ch-num">Executive Summary &amp; Table of Contents</span>
+      <h1>บทคัดย่อ และสารบัญรายงาน</h1>
+    </div>
+
+    <h2>บทคัดย่อ (Abstract)</h2>
+    <p>
+      โปรเจกต์ <strong>Simple Booking System for Lab Room (ระบบจองห้องปฏิบัติการ สำหรับสาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์)</strong>
+      ได้รับการออกแบบและพัฒนาขึ้นเพื่อแก้ไขปัญหาการจองห้องปฏิบัติการซ้ำซ้อน การจดบันทึกด้วยเอกสารกระดาษหรือการแจ้งผ่านช่องทางแชทที่ไม่เป็นระบบ
+      โดยพัฒนาเป็นเว็บแอปพลิเคชันแบบ Single Page Application (SPA) ด้วยเทคโนโลยี <strong>HTML5, CSS3 และ Modern JavaScript (ES Modules)</strong>
+      ควบคู่กับการจัดเก็บข้อมูลในเบราว์เซอร์ด้วยฐานข้อมูล <strong>IndexedDB (<code>LabBookingDB</code>)</strong> สำหรับข้อมูลห้องและรายการจอง
+      และ <strong>LocalStorage</strong> สำหรับจัดการเซสชันผู้ใช้และสิทธิ์ของผู้ดูแลระบบ
+    </p>
+    <p>
+      จุดเด่นของระบบคือการแยกโครงสร้างโค้ดออกเป็น 3 ชั้นอย่างชัดเจน ได้แก่ ชั้นส่วนติดต่อผู้ใช้ (Pages &amp; Components),
+      ชั้นบริการจัดการข้อมูล (Services) และชั้นกฎธุรกิจ (Domain Rules) โดยเฉพาะอัลกอริทึมตรวจสอบช่วงเวลาซ้ำซ้อน
+      (<code>new_start_time &lt; existing_end_time AND new_end_time &gt; existing_start_time</code>) ที่ทำงานทั้งแบบ Real-time บนหน้าแบบฟอร์มจอง
+      และตรวจสอบซ้ำในขั้นตอนการอนุมัติของผู้ดูแลระบบ ช่วยป้องกันปัญหาการอนุมัติห้องซ้ำซ้อนได้อย่างสมบูรณ์
+      นอกจากนี้ระบบยังผ่านการทดสอบด้วยชุดทดสอบอัตโนมัติ (Unit Tests) จำนวน 48 ชุดทดสอบ ครอบคลุมทุกเกณฑ์การตรวจรับ (Acceptance Criteria) ตามเอกสาร SRS ทุกประการ
+    </p>
+
+    <h2>สารบัญเนื้อหา (Table of Contents)</h2>
+    <ul class="toc-list">
+      <li class="toc-ch"><span>บทที่ 1 บทนำและข้อกำหนดความต้องการของระบบ (SRS)</span><span>ส่วนที่ 1</span></li>
+      <li class="toc-sub"><span>1.1 ชื่อโปรเจกต์และภาพรวมของระบบ (Project Overview)</span><span>1.1</span></li>
+      <li class="toc-sub"><span>1.2 วัตถุประสงค์ของระบบ และกลุ่มผู้ใช้งาน</span><span>1.2</span></li>
+      <li class="toc-sub"><span>1.3 ขอบเขตของระบบ (ขอบเขตหลัก ขอบเขตเสริม และสิ่งที่ไม่อยู่ในขอบเขต)</span><span>1.3</span></li>
+      <li class="toc-sub"><span>1.4 ความต้องการเชิงฟังก์ชัน (Functional Requirements: FR-01 ถึง FR-18)</span><span>1.4</span></li>
+      <li class="toc-sub"><span>1.5 ความต้องการไม่เชิงฟังก์ชัน (Non-Functional Requirements: NFR-01 ถึง NFR-08)</span><span>1.5</span></li>
+      <li class="toc-sub"><span>1.6 แผนการดำเนินงาน 2 สัปดาห์ (Day 1 – Day 14)</span><span>1.6</span></li>
+
+      <li class="toc-ch"><span>บทที่ 2 การวิเคราะห์และออกแบบระบบ (System Analysis &amp; Design)</span><span>ส่วนที่ 2</span></li>
+      <li class="toc-sub"><span>2.1 สถาปัตยกรรมระบบแบบแยกชั้น (Layered SPA Architecture)</span><span>2.1</span></li>
+      <li class="toc-sub"><span>2.2 การออกแบบฐานข้อมูลและพจนานุกรมข้อมูล (Lab Room, Booking, Session)</span><span>2.2</span></li>
+      <li class="toc-sub"><span>2.3 สถานะของการจอง (Booking Status) และกฎการจองเบื้องต้น</span><span>2.3</span></li>
+      <li class="toc-sub"><span>2.4 อัลกอริทึมและเงื่อนไขการตรวจสอบเวลาซ้ำซ้อน (Time Overlap Logic)</span><span>2.4</span></li>
+      <li class="toc-sub"><span>2.5 ขั้นตอนการทำงานของระบบ (Workflow การจอง การอนุมัติ และการดูตาราง)</span><span>2.5</span></li>
+
+      <li class="toc-ch"><span>บทที่ 3 การพัฒนาระบบและอธิบายโค้ดหลัก (System Implementation)</span><span>ส่วนที่ 3</span></li>
+      <li class="toc-sub"><span>3.1 เทคโนโลยีที่ใช้พัฒนา (Technology Stack) และโครงสร้างโปรเจกต์</span><span>3.1</span></li>
+      <li class="toc-sub"><span>3.2 อธิบายโค้ดหลัก: ฐานข้อมูล IndexedDB (<code>js/db.js</code>)</span><span>3.2</span></li>
+      <li class="toc-sub"><span>3.3 อธิบายโค้ดหลัก: กฎธุรกิจและตรวจเวลาทับซ้อน (<code>js/domain/rules.js</code>)</span><span>3.3</span></li>
+      <li class="toc-sub"><span>3.4 อธิบายโค้ดหลัก: บริการจัดการการจองและห้อง (<code>bookingService.js</code>, <code>roomService.js</code>)</span><span>3.4</span></li>
+      <li class="toc-sub"><span>3.5 ข้อมูลตัวอย่างในระบบ (ห้องปฏิบัติการ 5 ห้อง และการจอง 16 รายการ)</span><span>3.5</span></li>
+
+      <li class="toc-ch"><span>บทที่ 4 การทดสอบระบบและคู่มือการใช้งานพร้อมภาพหน้าจอ</span><span>ส่วนที่ 4</span></li>
+      <li class="toc-sub"><span>4.1 ผลการทดสอบระดับหน่วย (Unit Testing: 48 ชุดทดสอบ)</span><span>4.1</span></li>
+      <li class="toc-sub"><span>4.2 การตรวจสอบตามเกณฑ์ตรวจรับระบบ (Acceptance Criteria 13 ข้อ)</span><span>4.2</span></li>
+      <li class="toc-sub"><span>4.3 ภาพหน้าจอหลักและคู่มือการใช้งานครบทั้ง 10 หน้าจอ</span><span>4.3</span></li>
+
+      <li class="toc-ch"><span>บทที่ 5 สรุปผลการดำเนินงาน การใช้ AI Tools และแนวทางการ Deploy</span><span>ส่วนที่ 5</span></li>
+      <li class="toc-sub"><span>5.1 สรุปผลการพัฒนาเทียบกับ MVP และผลลัพธ์การเรียนรู้ (Learning Outcomes)</span><span>5.1</span></li>
+      <li class="toc-sub"><span>5.2 สรุปการใช้ AI Tools ในการพัฒนา (ตามข้อกำหนด SRS ข้อ 22–23)</span><span>5.2</span></li>
+      <li class="toc-sub"><span>5.3 ขั้นตอนการติดตั้ง การใช้งาน และการนำขึ้นระบบจริง (GitHub &amp; Deployment)</span><span>5.3</span></li>
+    </ul>
+  </section>
+
+  <!-- ==================== บทที่ 1 บทนำและ SRS ==================== -->
+  <section class="page-break">
+    <div class="chapter-header">
+      <span class="ch-num">Chapter 1 · Introduction &amp; Software Requirements Specification</span>
+      <h1>บทที่ 1 บทนำและข้อกำหนดความต้องการของระบบ (SRS)</h1>
+    </div>
+
+    <h2>1.1 ชื่อโปรเจกต์และภาพรวมของระบบ (SRS ข้อ 1–2)</h2>
+    <ul>
+      <li><strong>ชื่อโปรเจกต์ (ภาษาอังกฤษ):</strong> Simple Booking System for Lab Room</li>
+      <li><strong>ชื่อโปรเจกต์ (ภาษาไทย):</strong> ระบบจองห้องปฏิบัติการสำหรับสาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์</li>
+    </ul>
+    <p>
+      <strong>ภาพรวมของระบบ:</strong> Simple Booking System for Lab Room เป็นเว็บแอปพลิเคชันสำหรับจัดการการจองห้องปฏิบัติการของสาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์ โดยมีวัตถุประสงค์เพื่อให้ผู้ใช้งาน เช่น นักศึกษา อาจารย์ หรือเจ้าหน้าที่ สามารถตรวจสอบห้องว่าง ส่งคำขอจองห้อง และติดตามสถานะการจองได้อย่างสะดวก ระบบนี้ช่วยลดปัญหาการจองซ้ำซ้อน การจดบันทึกด้วยเอกสารหรือช่องทางแชทที่ไม่เป็นระบบ และช่วยให้ผู้ดูแลสามารถตรวจสอบรายการจอง อนุมัติหรือปฏิเสธคำขอจองได้ง่ายขึ้น
+    </p>
+
+    <h2>1.2 วัตถุประสงค์ของระบบ (SRS ข้อ 3)</h2>
+    <ol>
+      <li>เพื่อพัฒนาเว็บแอปพลิเคชันสำหรับจองห้องปฏิบัติการของสาขาวิชาวิศวกรรมคอมพิวเตอร์</li>
+      <li>เพื่อให้ผู้ใช้สามารถตรวจสอบรายการจองและสถานะห้องได้อย่างสะดวก</li>
+      <li>เพื่อป้องกันการจองห้องซ้ำซ้อนในวันและเวลาเดียวกัน</li>
+      <li>เพื่อให้ผู้ดูแลระบบสามารถอนุมัติ ยกเลิก หรือปฏิเสธคำขอจองได้</li>
+      <li>เพื่อฝึกให้นักศึกษาพัฒนาเว็บแอปพลิเคชันที่มี CRUD, validation, role-based view, calendar/table view และ dashboard อย่างง่าย</li>
+      <li>เพื่อส่งเสริมให้นักศึกษาใช้ AI tools ช่วยวางโครงสร้างระบบ เขียนโค้ด แก้บั๊ก และจัดทำเอกสารประกอบโปรเจกต์</li>
+    </ol>
+
+    <h2>1.3 กลุ่มผู้ใช้งานและบทบาทผู้ใช้งาน (SRS ข้อ 4 และ ข้อ 7)</h2>
+    <p>กลุ่มผู้ใช้งานหลักของระบบประกอบด้วย 4 กลุ่ม ได้แก่ (1) นักศึกษาสาขาวิชาวิศวกรรมคอมพิวเตอร์, (2) อาจารย์ประจำสาขาวิชาวิศวกรรมคอมพิวเตอร์, (3) เจ้าหน้าที่หรือผู้ดูแลห้องปฏิบัติการ และ (4) ผู้ดูแลระบบ โดยแบ่งสิทธิ์การใช้งานออกเป็น 2 บทบาทหลัก ดังนี้:</p>
+
+    <div class="two-col">
+      <div class="arch-box">
+        <h4>👤 7.1 บทบาทผู้ใช้งานทั่วไป (User)</h4>
+        <ul>
+          <li>ดูรายการห้องปฏิบัติการทั้งหมดที่เปิดให้จอง</li>
+          <li>ดูรายละเอียดห้อง (ความจุ อุปกรณ์ สถานที่ สถานะ)</li>
+          <li>ตรวจสอบตารางการจองรายวันและรายสัปดาห์</li>
+          <li>ส่งคำขอจองห้องพร้อมตรวจสอบเวลาซ้ำซ้อน</li>
+          <li>ดูสถานะคำขอจองของตนเอง (แยกตามอีเมลผู้จอง)</li>
+          <li>ยกเลิกคำขอจองของตนเอง หากยังไม่ถึงเวลาที่กำหนด</li>
+        </ul>
+      </div>
+      <div class="arch-box">
+        <h4>🛡️ 7.2 บทบาทผู้ดูแลระบบ (Admin)</h4>
+        <ul>
+          <li>เข้าสู่ระบบผู้ดูแลผ่านหน้า Login (<code>#/login</code>)</li>
+          <li>เพิ่ม แก้ไข และลบข้อมูลห้องปฏิบัติการ (CRUD)</li>
+          <li>ดูรายการคำขอจองทั้งหมดในระบบ</li>
+          <li>อนุมัติคำขอจอง (พร้อมตรวจซ้ำซ้อนอัตโนมัติ)</li>
+          <li>ปฏิเสธคำขอจองพร้อมระบุเหตุผลประกอบ</li>
+          <li>ยกเลิกรายการจอง และค้นหา/กรองรายการจอง</li>
+          <li>ดู Dashboard สรุปข้อมูลสถิติการใช้ห้องปฏิบัติการ</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>1.4 ขอบเขตของระบบ (SRS ข้อ 5–6)</h2>
+    <h3>1.4.1 ขอบเขตหลักที่ต้องทำ (Core Scope — ดำเนินการครบ 100%)</h3>
+    <ol>
+      <li>แสดงรายการห้องปฏิบัติการที่สามารถจองได้</li>
+      <li>แสดงรายละเอียดของห้อง เช่น ชื่อห้อง ความจุ อุปกรณ์ และสถานที่</li>
+      <li>ผู้ใช้สามารถส่งคำขอจองห้องได้</li>
+      <li>ผู้ใช้สามารถระบุวันที่ เวลาเริ่มต้น เวลาสิ้นสุด วัตถุประสงค์ และจำนวนผู้ใช้งานได้</li>
+      <li>ระบบตรวจสอบการจองซ้ำซ้อนในห้องเดียวกัน วันเดียวกัน และช่วงเวลาเดียวกันได้</li>
+      <li>ผู้ใช้สามารถดูรายการจองของตนเองได้</li>
+      <li>ผู้ดูแลสามารถดูคำขอจองทั้งหมดได้</li>
+      <li>ผู้ดูแลสามารถอนุมัติ ปฏิเสธ หรือยกเลิกคำขอจองได้</li>
+      <li>ระบบสามารถแสดงตารางการจองรายวันหรือรายสัปดาห์ได้</li>
+      <li>ระบบสามารถค้นหาและกรองรายการจองตามห้อง วันที่ หรือสถานะได้</li>
+      <li>ระบบสามารถแสดง Dashboard สรุปจำนวนการจองตามสถานะได้</li>
+      <li>Deploy ระบบให้สามารถใช้งานผ่าน URL ได้จริง</li>
+    </ol>
+
+    <h3>1.4.2 ขอบเขตเสริมที่ได้พัฒนาเพิ่มเติมในโปรเจกต์นี้ (Implemented Optional Features)</h3>
+    <ul>
+      <li><strong>ระบบ Login แยกบทบาท User และ Admin:</strong> พัฒนาหน้า <code>#/login</code> พร้อมระบบป้องกันการเข้าถึงหน้า Admin (Route Guard <code>adminOnly</code> ตาม NFR-05)</li>
+      <li><strong>ตารางการจองแบบ Visual Timeline (Day &amp; Week Calendar View):</strong> คำนวณความสูงบล็อกตามเวลาจริงและจัดเรียงบล็อกที่เวลาซ้อนกันเป็นคอลัมน์ย่อย (Multi-lane layout)</li>
+      <li><strong>โทนสี Dark Mode ระดับพรีเมียม:</strong> ออกแบบด้วย CSS Variables โทนสีเข้ม ลดความล้าของสายตาและอ่านง่ายในทุกขนาดหน้าจอ</li>
+    </ul>
+
+    <h3>1.4.3 สิ่งที่ไม่อยู่ในขอบเขต (Out of Scope สำหรับโปรเจกต์ 2 สัปดาห์)</h3>
+    <p>ไม่เชื่อมต่อระบบทะเบียนนักศึกษาจริงหรือ LDAP/SSO ของมหาวิทยาลัย, ไม่ทำระบบอนุมัติหลายระดับ, ไม่คิดค่าบริการการใช้ห้อง, ไม่ทำ Native Mobile App, ไม่เชื่อมต่อ Google Calendar จริง และไม่ควบคุมอุปกรณ์ IoT หรือประตูห้องจริง</p>
+  </section>
+
+  <!-- ==================== บทที่ 1 (ต่อ) FR, NFR, แผน 14 วัน ==================== -->
+  <section class="page-break">
+    <h2>1.5 ความต้องการเชิงฟังก์ชัน (Functional Requirements — SRS ข้อ 8)</h2>
+    <div class="table-caption">ตารางที่ 1.1 รายการความต้องการเชิงฟังก์ชัน (FR-01 ถึง FR-18) และการจับคู่กับโมดูลในระบบจริง</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:68px;">รหัส</th>
+          <th style="width:165px;">รายการความต้องการ</th>
+          <th>รายละเอียดตาม SRS</th>
+          <th style="width:170px;">หน้าจอ / ไฟล์ที่รับผิดชอบ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>FR-01</strong></td><td>แสดงรายการห้องปฏิบัติการ</td><td>แสดงรายการห้องที่สามารถจองได้ เช่น CE Lab 1, CE Lab 2, Network Lab, IoT Lab</td><td><code>#/rooms</code><br/><code>js/pages/roomList.js</code></td></tr>
+        <tr><td><strong>FR-02</strong></td><td>แสดงรายละเอียดห้อง</td><td>แสดงชื่อห้อง ความจุ อุปกรณ์ สถานที่ และสถานะการใช้งาน</td><td><code>#/rooms/:id</code><br/><code>js/pages/roomDetail.js</code></td></tr>
+        <tr><td><strong>FR-03</strong></td><td>เพิ่มข้อมูลห้อง</td><td>Admin สามารถเพิ่มข้อมูลห้องปฏิบัติการใหม่ได้</td><td><code>#/admin/rooms</code><br/><code>js/services/roomService.js</code></td></tr>
+        <tr><td><strong>FR-04</strong></td><td>แก้ไขข้อมูลห้อง</td><td>Admin สามารถแก้ไขรายละเอียดห้องปฏิบัติการได้</td><td><code>#/admin/rooms</code><br/><code>js/pages/adminRooms.js</code></td></tr>
+        <tr><td><strong>FR-05</strong></td><td>ลบข้อมูลห้อง</td><td>Admin สามารถลบข้อมูลห้องที่ไม่ต้องการได้ (ป้องกันการลบหากมีการจองค้างอยู่)</td><td><code>#/admin/rooms</code><br/><code>roomService.remove()</code></td></tr>
+        <tr><td><strong>FR-06</strong></td><td>ส่งคำขอจองห้อง</td><td>User เลือกห้อง วันที่ เวลาเริ่มต้น เวลาสิ้นสุด วัตถุประสงค์ และจำนวนผู้ใช้งานได้</td><td><code>#/book</code><br/><code>js/pages/bookingForm.js</code></td></tr>
+        <tr><td><strong>FR-07</strong></td><td>ตรวจสอบเวลาซ้ำซ้อน</td><td>ตรวจสอบว่าห้องเดียวกันไม่ถูกจองซ้ำในช่วงเวลาที่ทับซ้อนกันกับรายการที่ Approved</td><td><code>js/domain/rules.js</code><br/>(<code>isOverlap</code>, <code>findConflicts</code>)</td></tr>
+        <tr><td><strong>FR-08</strong></td><td>บันทึกคำขอจอง</td><td>ระบบบันทึกคำขอจองลงฐานข้อมูลพร้อมสถานะเริ่มต้นเป็น <code>Pending</code></td><td><code>bookingService.create()</code><br/><code>js/db.js</code> (IndexedDB)</td></tr>
+        <tr><td><strong>FR-09</strong></td><td>ดูรายการจองของผู้ใช้</td><td>User สามารถดูรายการจองที่ตนเองส่งคำขอได้</td><td><code>#/my</code><br/><code>js/pages/myBookings.js</code></td></tr>
+        <tr><td><strong>FR-10</strong></td><td>ดูคำขอจองทั้งหมด</td><td>Admin สามารถดูคำขอจองทั้งหมดในระบบได้</td><td><code>#/admin/bookings</code><br/><code>js/pages/adminBookings.js</code></td></tr>
+        <tr><td><strong>FR-11</strong></td><td>อนุมัติคำขอจอง</td><td>Admin สามารถเปลี่ยนสถานะคำขอจองเป็น <code>Approved</code> ได้</td><td><code>bookingService.approve()</code></td></tr>
+        <tr><td><strong>FR-12</strong></td><td>ปฏิเสธคำขอจอง</td><td>Admin เปลี่ยนสถานะคำขอจองเป็น <code>Rejected</code> พร้อมระบุเหตุผลได้</td><td><code>bookingService.reject()</code></td></tr>
+        <tr><td><strong>FR-13</strong></td><td>ยกเลิกคำขอจอง</td><td>User หรือ Admin สามารถยกเลิกคำขอจองได้ตามเงื่อนไขที่กำหนด</td><td><code>bookingService.cancel()</code><br/><code>canUserCancel()</code></td></tr>
+        <tr><td><strong>FR-14</strong></td><td>แสดงตารางการจอง</td><td>แสดงรายการจองตามวันหรือสัปดาห์ในรูปแบบตารางเวลา</td><td><code>#/schedule</code><br/><code>js/pages/schedule.js</code></td></tr>
+        <tr><td><strong>FR-15</strong></td><td>ค้นหาและกรองรายการจอง</td><td>ค้นหาและกรองตามห้อง วันที่ ผู้จอง หรือสถานะได้</td><td><code>bookingService.search()</code></td></tr>
+        <tr><td><strong>FR-16</strong></td><td>Dashboard สรุปข้อมูล</td><td>แสดงจำนวนการจองทั้งหมด รออนุมัติ อนุมัติแล้ว ปฏิเสธ และยกเลิก พร้อมกราฟ</td><td><code>#/admin/dashboard</code><br/><code>js/pages/dashboard.js</code></td></tr>
+        <tr><td><strong>FR-17</strong></td><td>Responsive Design</td><td>แสดงผลได้ดีบนคอมพิวเตอร์ แท็บเล็ต และมือถือ</td><td><code>css/style.css</code></td></tr>
+        <tr><td><strong>FR-18</strong></td><td>Deploy ระบบ</td><td>สามารถเปิดใช้งานผ่าน URL สาธารณะและเก็บโค้ดบน GitHub</td><td>GitHub / Static Hosting</td></tr>
+      </tbody>
+    </table>
+
+    <h2>1.6 ความต้องการไม่เชิงฟังก์ชัน (Non-Functional Requirements — SRS ข้อ 9)</h2>
+    <div class="table-caption">ตารางที่ 1.2 รายการความต้องการไม่เชิงฟังก์ชัน (NFR-01 ถึง NFR-08) และแนวทางการออกแบบในระบบ</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:72px;">รหัส</th>
+          <th style="width:140px;">หัวข้อ</th>
+          <th>รายละเอียดความต้องการ</th>
+          <th>การออกแบบในระบบจริง</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>NFR-01</strong></td><td>ใช้งานง่าย</td><td>หน้าจอเรียบง่าย เมนูชัดเจน ใช้งานสะดวก</td><td>ใช้ Topbar แยกตามบทบาท มี Badge สถานะสีชัดเจน และแจ้งผลด้วย Toast Notification</td></tr>
+        <tr><td><strong>NFR-02</strong></td><td>ความถูกต้อง</td><td>ตรวจสอบการจองซ้ำซ้อนและคำนวณเวลาได้ถูกต้อง</td><td>แปลงเวลาเป็นนาที (<code>toMin</code>) และมี Unit Test ตรวจสอบ 29 กรณีทดสอบ</td></tr>
+        <tr><td><strong>NFR-03</strong></td><td>ความเร็ว</td><td>การค้นหา กรอง และบันทึกข้อมูลทำงานรวดเร็ว</td><td>ประมวลผลฝั่ง Client ด้วย IndexedDB และ DOM rendering แบบไม่ต้องรีโหลดหน้า</td></tr>
+        <tr><td><strong>NFR-04</strong></td><td>รองรับมือถือ</td><td>แสดงผลได้ดีทั้งบนคอมพิวเตอร์และสมาร์ตโฟน</td><td>ตารางข้อมูลเปลี่ยนเป็น Card อัตโนมัติบนหน้าจอแคบ พร้อมเมนู Hamburger</td></tr>
+        <tr><td><strong>NFR-05</strong></td><td>ความปลอดภัยเบื้องต้น</td><td>ป้องกันไม่ให้ User เข้าถึงหน้าจัดการของ Admin</td><td>ฟังก์ชัน <code>adminOnly()</code> ใน <code>app.js</code> บังคับ Redirect ไป <code>#/login</code> หากยังไม่ได้เข้าสู่ระบบ</td></tr>
+        <tr><td><strong>NFR-06</strong></td><td>ความเป็นส่วนตัว</td><td>ข้อมูลผู้จองถูกใช้เพื่อการจัดการจองห้องเท่านั้น</td><td>เก็บเฉพาะชื่อ อีเมล และประเภทผู้จองใน IndexedDB ของเบราว์เซอร์</td></tr>
+        <tr><td><strong>NFR-07</strong></td><td>ดูแลโค้ดง่าย</td><td>แบ่งโค้ดเป็น component, page, service, module ชัดเจน</td><td>แยกโฟลเดอร์ <code>domain/</code>, <code>services/</code>, <code>pages/</code>, <code>components/</code>, <code>utils/</code></td></tr>
+        <tr><td><strong>NFR-08</strong></td><td>ความน่าเชื่อถือ</td><td>มี validation ป้องกันข้อมูลไม่ครบถ้วนหรือเวลาผิดพลาด</td><td>ฟังก์ชัน <code>validateBooking</code> และ <code>validateRoom</code> ตรวจสอบทุกฟิลด์ก่อนบันทึก</td></tr>
+      </tbody>
+    </table>
+
+    <h2>1.7 แผนการดำเนินงาน 2 สัปดาห์ (SRS ข้อ 21)</h2>
+    <div class="table-caption">ตารางที่ 1.3 แผนการดำเนินงานพัฒนาโปรเจกต์ระยะเวลา 14 วัน (2 สัปดาห์)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:70px;">วันที่</th>
+          <th>งานที่ดำเนินการ</th>
+          <th style="width:70px;">วันที่</th>
+          <th>งานที่ดำเนินการ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Day 1</strong></td><td>วิเคราะห์ Requirement จาก SRS และออกแบบโครงหน้าจอ</td><td><strong>Day 8</strong></td><td>พัฒนาหน้า Admin Booking Management (<code>adminBookings.js</code>)</td></tr>
+        <tr><td><strong>Day 2</strong></td><td>ออกแบบ Data Model (IndexedDB) และสร้าง Project Structure</td><td><strong>Day 9</strong></td><td>พัฒนาฟังก์ชันอนุมัติ ปฏิเสธ (พร้อมเหตุผล) และยกเลิกคำขอ</td></tr>
+        <tr><td><strong>Day 3</strong></td><td>สร้างข้อมูลห้องตัวอย่าง 5 ห้อง และหน้า Lab Room List</td><td><strong>Day 10</strong></td><td>พัฒนาหน้า Booking Schedule รายวันและรายสัปดาห์</td></tr>
+        <tr><td><strong>Day 4</strong></td><td>พัฒนาหน้า Lab Room Detail และหน้า Booking Form</td><td><strong>Day 11</strong></td><td>พัฒนาหน้า Dashboard (Chart.js) และระบบค้นหา/กรอง</td></tr>
+        <tr><td><strong>Day 5</strong></td><td>พัฒนาระบบบันทึกคำขอจองลงฐานข้อมูล (สถานะ <code>Pending</code>)</td><td><strong>Day 12</strong></td><td>ปรับแต่ง UI ให้เป็น Responsive และเขียน Unit Tests 48 ข้อ</td></tr>
+        <tr><td><strong>Day 6</strong></td><td>พัฒนาอัลกอริทึมตรวจสอบเวลาทับซ้อน (<code>isOverlap</code>)</td><td><strong>Day 13</strong></td><td>เตรียมระบบสำหรับ Deploy และอัปโหลดขึ้น GitHub Repository</td></tr>
+        <tr><td><strong>Day 7</strong></td><td>พัฒนาหน้า My Booking และระบบยกเลิกการจองของผู้ใช้</td><td><strong>Day 14</strong></td><td>จัดทำ README.md, บันทึกภาพหน้าจอ และจัดทำเล่มรายงานฉบับสมบูรณ์</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== บทที่ 2 การวิเคราะห์และออกแบบระบบ ==================== -->
+  <section class="page-break">
+    <div class="chapter-header">
+      <span class="ch-num">Chapter 2 · System Analysis &amp; Design</span>
+      <h1>บทที่ 2 การวิเคราะห์และออกแบบระบบ</h1>
+    </div>
+
+    <h2>2.1 สถาปัตยกรรมของระบบ (Layered Client-Side Architecture)</h2>
+    <p>
+      เพื่อให้สอดคล้องกับข้อกำหนด <strong>NFR-07 (ดูแลโค้ดง่าย)</strong> ระบบได้รับการออกแบบโดยแยกความรับผิดชอบออกเป็น 3 ชั้น (3-Layer Architecture) ด้วยมาตรฐาน ES Modules ดังนี้:
+    </p>
+    <div class="arch-grid">
+      <div class="arch-box">
+        <h4>1. Presentation Layer (UI)</h4>
+        <ul>
+          <li><code>index.html</code> &amp; <code>css/style.css</code></li>
+          <li><code>js/app.js</code> &amp; <code>js/router.js</code></li>
+          <li><code>js/pages/*.js</code> (10 หน้าจอหลัก)</li>
+          <li><code>js/components/*.js</code> (Card &amp; Modal)</li>
+          <li>รับอินพุตจากผู้ใช้และเรนเดอร์ HTML</li>
+        </ul>
+      </div>
+      <div class="arch-box">
+        <h4>2. Service Layer (Application)</h4>
+        <ul>
+          <li><code>js/services/roomService.js</code></li>
+          <li><code>js/services/bookingService.js</code></li>
+          <li>ประสานงานระหว่าง UI, กฎธุรกิจใน Domain และฐานข้อมูล</li>
+          <li>ทำงานแบบ Asynchronous (<code>async/await</code>)</li>
+        </ul>
+      </div>
+      <div class="arch-box">
+        <h4>3. Domain &amp; Data Layer</h4>
+        <ul>
+          <li><code>js/domain/rules.js</code> (Pure Functions)</li>
+          <li><code>js/domain/constants.js</code></li>
+          <li><code>js/db.js</code> (IndexedDB: <code>LabBookingDB</code>)</li>
+          <li><code>js/session.js</code> (LocalStorage Session)</li>
+          <li><code>js/seed.js</code> (ข้อมูลตัวอย่างเริ่มต้น)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>2.2 การออกแบบข้อมูลที่ต้องจัดเก็บ (Data Dictionary — SRS ข้อ 10)</h2>
+    <h3>2.2.1 โครงสร้างข้อมูลห้องปฏิบัติการ (10.1 Lab Room — Object Store: <code>rooms</code>)</h3>
+    <div class="table-caption">ตารางที่ 2.1 พจนานุกรมข้อมูลตารางห้องปฏิบัติการ (<code>rooms</code>)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:130px;">Field</th>
+          <th style="width:110px;">ชนิดข้อมูล</th>
+          <th>รายละเอียดตาม SRS</th>
+          <th style="width:190px;">ตัวอย่างข้อมูลจริงในระบบ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>id</code> (PK)</td><td>String</td><td>รหัสอ้างอิงห้องปฏิบัติการ (Primary Key)</td><td><code>"room-ce1"</code></td></tr>
+        <tr><td><code>room_name</code></td><td>String</td><td>ชื่อห้องปฏิบัติการ</td><td><code>"Computer Engineering Lab 1"</code></td></tr>
+        <tr><td><code>room_code</code></td><td>String (Unique)</td><td>รหัสห้องปฏิบัติการ (ห้ามซ้ำกัน)</td><td><code>"CE-LAB-01"</code></td></tr>
+        <tr><td><code>location</code></td><td>String</td><td>สถานที่ตั้ง (อาคาร / ชั้น / ห้อง)</td><td><code>"อาคารวิศวกรรมศาสตร์ ชั้น 2 ห้อง 201"</code></td></tr>
+        <tr><td><code>capacity</code></td><td>Number (Integer)</td><td>ความจุจำนวนผู้ใช้งานสูงสุด (คน)</td><td><code>30</code></td></tr>
+        <tr><td><code>equipment</code></td><td>Array&lt;String&gt;</td><td>รายการอุปกรณ์ประจำห้อง</td><td><code>["Computer", "Projector", "Internet"]</code></td></tr>
+        <tr><td><code>description</code></td><td>String</td><td>รายละเอียดเพิ่มเติมของห้อง</td><td><code>"ห้องปฏิบัติการคอมพิวเตอร์ขนาดใหญ่..."</code></td></tr>
+        <tr><td><code>status</code></td><td>String (Enum)</td><td>สถานะห้อง: <code>Available</code>, <code>Maintenance</code>, <code>Closed</code></td><td><code>"Available"</code></td></tr>
+        <tr><td><code>created_at</code></td><td>String (ISO 8601)</td><td>วันและเวลาที่เพิ่มข้อมูลห้อง</td><td><code>"2026-10-21T09:00:00.000Z"</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>2.2.2 โครงสร้างข้อมูลการจองห้อง (10.2 Booking — Object Store: <code>bookings</code>)</h3>
+    <div class="table-caption">ตารางที่ 2.2 พจนานุกรมข้อมูลตารางการจองห้องปฏิบัติการ (<code>bookings</code>)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:140px;">Field</th>
+          <th style="width:110px;">ชนิดข้อมูล</th>
+          <th>รายละเอียดตาม SRS</th>
+          <th style="width:190px;">ตัวอย่างข้อมูลจริงในระบบ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>id</code> (PK)</td><td>String</td><td>รหัสการจอง (Primary Key)</td><td><code>"bk-01"</code></td></tr>
+        <tr><td><code>room_id</code> (FK)</td><td>String (Indexed)</td><td>รหัสห้องที่จอง อ้างอิง <code>rooms.id</code></td><td><code>"room-ce1"</code></td></tr>
+        <tr><td><code>requester_name</code></td><td>String</td><td>ชื่อ-นามสกุลผู้ขอจอง</td><td><code>"สมชาย ใจดี"</code></td></tr>
+        <tr><td><code>requester_email</code></td><td>String</td><td>อีเมลผู้จอง (ใช้ตรวจสอบสิทธิ์เจ้าของรายการ)</td><td><code>"somchai@ksu.ac.th"</code></td></tr>
+        <tr><td><code>requester_type</code></td><td>String (Enum)</td><td>ประเภทผู้จอง: <code>Student</code>, <code>Teacher</code>, <code>Staff</code></td><td><code>"Student"</code></td></tr>
+        <tr><td><code>booking_date</code></td><td>String (Indexed)</td><td>วันที่จอง รูปแบบ <code>YYYY-MM-DD</code></td><td><code>"2026-10-21"</code></td></tr>
+        <tr><td><code>start_time</code></td><td>String</td><td>เวลาเริ่มต้น รูปแบบ <code>HH:MM</code></td><td><code>"09:00"</code></td></tr>
+        <tr><td><code>end_time</code></td><td>String</td><td>เวลาสิ้นสุด รูปแบบ <code>HH:MM</code></td><td><code>"11:00"</code></td></tr>
+        <tr><td><code>purpose</code></td><td>String</td><td>วัตถุประสงค์การใช้งานห้อง</td><td><code>"ติวสอบกลางภาควิชา Programming"</code></td></tr>
+        <tr><td><code>number_of_users</code></td><td>Number (Integer)</td><td>จำนวนผู้เข้าใช้งาน (ต้องไม่เกิน <code>room.capacity</code>)</td><td><code>20</code></td></tr>
+        <tr><td><code>status</code></td><td>String (Indexed)</td><td>สถานะ: <code>Pending</code>, <code>Approved</code>, <code>Rejected</code>, <code>Cancelled</code></td><td><code>"Pending"</code></td></tr>
+        <tr><td><code>admin_comment</code></td><td>String</td><td>ความเห็นหรือเหตุผลจากผู้ดูแลระบบ</td><td><code>"ห้องถูกสำรองไว้สำหรับกิจกรรมคณะ"</code></td></tr>
+        <tr><td><code>created_at</code></td><td>String (ISO 8601)</td><td>วันและเวลาที่ส่งคำขอจอง</td><td><code>"2026-10-20T09:00:00.000Z"</code></td></tr>
+        <tr><td><code>updated_at</code></td><td>String (ISO 8601)</td><td>วันและเวลาที่แก้ไขสถานะล่าสุด</td><td><code>"2026-10-20T09:00:00.000Z"</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== บทที่ 2 (ต่อ) กฎการจอง, เวลาซ้ำซ้อน, Workflow ==================== -->
+  <section class="page-break">
+    <h2>2.3 สถานะของการจองและกฎการจองเบื้องต้น (SRS ข้อ 12–13)</h2>
+    <p>ระบบกำหนดสถานะของการจองออกเป็น 4 สถานะมาตรฐาน ได้แก่:</p>
+    <ul>
+      <li><span class="badge b-pending">Pending (รออนุมัติ)</span> — สถานะเริ่มต้นเมื่อผู้ใช้ส่งคำขอจองใหม่ รอการพิจารณาจากผู้ดูแลระบบ</li>
+      <li><span class="badge b-approved">Approved (อนุมัติแล้ว)</span> — ผู้ดูแลอนุมัติให้ใช้งานห้องได้ และระบบจะล็อกช่วงเวลานี้ไม่ให้ผู้อื่นจองซ้ำ</li>
+      <li><span class="badge b-rejected">Rejected (ไม่อนุมัติ)</span> — ผู้ดูแลปฏิเสธคำขอจอง พร้อมบันทึกเหตุผลในฟิลด์ <code>admin_comment</code></li>
+      <li><span class="badge b-cancelled">Cancelled (ยกเลิก)</span> — รายการจองถูกยกเลิกโดยผู้จองเอง (ก่อนถึงเวลาเริ่ม) หรือยกเลิกโดยผู้ดูแลระบบ</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>กฎการจองเบื้องต้น 7 ข้อ (SRS ข้อ 13) ที่บังคับใช้ใน <code>js/domain/rules.js</code>:</strong>
+      <ol style="margin-bottom:0;">
+        <li>ผู้ใช้ต้องเลือกห้อง วันที่ เวลาเริ่มต้น และเวลาสิ้นสุดให้ครบถ้วน</li>
+        <li>เวลาเริ่มต้นต้องน้อยกว่าเวลาสิ้นสุดเสมอ (<code>toMin(start_time) &lt; toMin(end_time)</code>) และห้ามจองย้อนหลัง</li>
+        <li>ไม่สามารถจองห้องที่อยู่ในสถานะ <code>Maintenance</code> (ปิดปรับปรุง) หรือ <code>Closed</code> (ปิดให้บริการ) ได้</li>
+        <li>ไม่สามารถจองซ้ำกับรายการที่มีสถานะ <code>Approved</code> ในห้องเดียวกัน วันเดียวกัน และช่วงเวลาทับซ้อนกันได้</li>
+        <li>คำขอจองใหม่ทุกใบมีสถานะเริ่มต้นเป็น <code>Pending</code> เสมอ</li>
+        <li>ผู้ใช้สามารถยกเลิกคำขอจองของตนเองได้ เฉพาะเมื่อสถานะเป็น <code>Pending</code> หรือ <code>Approved</code> และยังไม่ถึงเวลาเริ่มใช้งาน</li>
+        <li>Admin สามารถอนุมัติ ปฏิเสธ (ต้องระบุเหตุผล) หรือยกเลิกคำขอจองได้</li>
+      </ol>
+    </div>
+
+    <h2>2.4 เงื่อนไขการตรวจสอบเวลาซ้ำซ้อน (Time Overlap Logic — SRS ข้อ 14)</h2>
+    <p>
+      หัวใจสำคัญที่สุดของระบบจองห้องปฏิบัติการคือการป้องกันการจองเวลาทับซ้อนกันในห้องเดียวกันและวันเดียวกัน
+      โดยระบบจะแปลงเวลาจากสตริง <code>"HH:MM"</code> เป็นจำนวนนาทีนับจากเที่ยงคืนด้วยฟังก์ชัน <code>toMin(t) = h * 60 + m</code>
+      แล้วตรวจสอบด้วยอสมการคณิตศาสตร์ตามข้อกำหนด SRS ข้อ 14 ดังนี้:
+    </p>
+
+    <div class="formula-box">
+      new_start_time &lt; existing_end_time &nbsp;&nbsp;AND&nbsp;&nbsp; new_end_time &gt; existing_start_time
+    </div>
+
+    <div class="table-caption">ตารางที่ 2.3 ตัวอย่างการตรวจสอบช่วงเวลาซ้ำซ้อนตาม SRS ข้อ 14 และกรณีขอบเพิ่มเติม</div>
+    <table>
+      <thead>
+        <tr>
+          <th>รายการเดิม (Approved)</th>
+          <th>รายการใหม่ที่ขอจอง</th>
+          <th>การคำนวณ (นาที)</th>
+          <th>ผลลัพธ์</th>
+          <th>คำอธิบาย</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>09:00–11:00</code> (540–660)</td>
+          <td><code>10:00–12:00</code> (600–720)</td>
+          <td><code>600 &lt; 660 &amp;&amp; 720 &gt; 540</code></td>
+          <td><span class="badge b-rejected">ซ้ำซ้อน (Overlap)</span></td>
+          <td>เวลาเริ่มใหม่ (10:00) เข้ามาก่อนเวลาจบเดิม (11:00)</td>
+        </tr>
+        <tr>
+          <td><code>09:00–11:00</code> (540–660)</td>
+          <td><code>08:00–09:30</code> (480–570)</td>
+          <td><code>480 &lt; 660 &amp;&amp; 570 &gt; 540</code></td>
+          <td><span class="badge b-rejected">ซ้ำซ้อน (Overlap)</span></td>
+          <td>เวลาจบใหม่ (09:30) ล้ำเข้าไปในเวลาเริ่มเดิม (09:00)</td>
+        </tr>
+        <tr>
+          <td><code>09:00–11:00</code> (540–660)</td>
+          <td><code>11:00–12:00</code> (660–720)</td>
+          <td><code>660 &lt; 660 (False)</code></td>
+          <td><span class="badge b-approved">ไม่ซ้ำซ้อน</span></td>
+          <td>ช่วงเวลาต่อกันพอดี (Back-to-Back) จองต่อได้ทันที</td>
+        </tr>
+        <tr>
+          <td><code>13:00–15:00</code> (780–900)</td>
+          <td><code>09:00–12:00</code> (540–720)</td>
+          <td><code>540 &lt; 900 &amp;&amp; 720 &gt; 780 (False)</code></td>
+          <td><span class="badge b-approved">ไม่ซ้ำซ้อน</span></td>
+          <td>อยู่คนละช่วงเวลาอย่างชัดเจน (เช้า vs บ่าย)</td>
+        </tr>
+        <tr>
+          <td><code>09:00–11:00</code> (540–660)</td>
+          <td><code>08:30–11:30</code> (510–690)</td>
+          <td><code>510 &lt; 660 &amp;&amp; 690 &gt; 540</code></td>
+          <td><span class="badge b-rejected">ซ้ำซ้อน (Overlap)</span></td>
+          <td>ช่วงเวลาใหม่ครอบคลุมช่วงเวลาเดิมทั้งหมด</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2.5 Workflow การทำงานของระบบ (SRS ข้อ 15)</h2>
+    <h3>15.1 Workflow การจองห้องของ User</h3>
+    <div class="workflow-steps">
+      <span class="wf-step">1. เปิดหน้าเว็บ</span><span class="wf-arrow">→</span>
+      <span class="wf-step">2. ดูรายการห้อง</span><span class="wf-arrow">→</span>
+      <span class="wf-step">3. เลือกห้องที่ต้องการ</span><span class="wf-arrow">→</span>
+      <span class="wf-step">4. กรอกฟอร์มจอง</span><span class="wf-arrow">→</span>
+      <span class="wf-step">5. Validate ข้อมูล</span><span class="wf-arrow">→</span>
+      <span class="wf-step">6. ตรวจซ้ำซ้อนกับ Approved</span><span class="wf-arrow">→</span>
+      <span class="wf-step">7. บันทึกเป็น Pending</span><span class="wf-arrow">→</span>
+      <span class="wf-step">8. ติดตามสถานะที่ "การจองของฉัน"</span>
+    </div>
+
+    <h3>15.2 Workflow การอนุมัติคำขอจองของ Admin</h3>
+    <div class="workflow-steps">
+      <span class="wf-step">1. Admin Login &amp; เปิดจัดการการจอง</span><span class="wf-arrow">→</span>
+      <span class="wf-step">2. ดูรายการคำขอทั้งหมด</span><span class="wf-arrow">→</span>
+      <span class="wf-step">3. ตรวจสอบรายละเอียด/คำเตือนทับซ้อน</span><span class="wf-arrow">→</span>
+      <span class="wf-step">4. กดอนุมัติ หรือ ปฏิเสธ (ระบุเหตุผล)</span><span class="wf-arrow">→</span>
+      <span class="wf-step">5. อัปเดตสถานะใน IndexedDB</span><span class="wf-arrow">→</span>
+      <span class="wf-step">6. แสดงผลในตารางการจองทันที</span>
+    </div>
+
+    <h3>15.3 Workflow การดูตารางการจอง (Booking Schedule)</h3>
+    <div class="workflow-steps">
+      <span class="wf-step">1. เปิดหน้าตารางการจอง (<code>#/schedule</code>)</span><span class="wf-arrow">→</span>
+      <span class="wf-step">2. เลือกมุมมอง (รายวัน / รายสัปดาห์) และวันที่</span><span class="wf-arrow">→</span>
+      <span class="wf-step">3. กรองตามห้องหรือสถานะ</span><span class="wf-arrow">→</span>
+      <span class="wf-step">4. คลิกที่บล็อกเวลาเพื่อดูรายละเอียดใน Modal</span>
+    </div>
+  </section>
+
+  <!-- ==================== บทที่ 3 การพัฒนาระบบและอธิบายโค้ดหลัก ==================== -->
+  <section class="page-break">
+    <div class="chapter-header">
+      <span class="ch-num">Chapter 3 · System Implementation &amp; Core Code Explanation</span>
+      <h1>บทที่ 3 การพัฒนาระบบและอธิบายโค้ดหลัก</h1>
+    </div>
+
+    <h2>3.1 เทคโนโลยีที่ใช้พัฒนา (Technology Stack) และโครงสร้างไฟล์โปรเจกต์</h2>
+    <ul>
+      <li><strong>Frontend Architecture:</strong> HTML5, CSS3 (Custom Properties + Responsive Grid/Flexbox), Vanilla JavaScript (ES2022 Modules)</li>
+      <li><strong>Data Storage:</strong> <strong>IndexedDB</strong> (ฐานข้อมูลหลักในเบราว์เซอร์ชื่อ <code>LabBookingDB</code>) ร่วมกับ <strong>LocalStorage</strong> สำหรับเก็บ Session และ Profile</li>
+      <li><strong>Data Visualization:</strong> Chart.js 4.4.1 สำหรับแสดงแผนภูมิ Doughnut Chart ในหน้า Admin Dashboard</li>
+      <li><strong>Testing Environment:</strong> Node.js Built-in Assert (`node:assert/strict`) สำหรับรัน Unit Tests แบบอัตโนมัติ</li>
+    </ul>
+
+    <pre><code>c:\mini wed\
+├── index.html                  # โครงสร้างหลักของหน้าเว็บ (SPA Shell, Topbar, Container, Toast root)
+├── package.json                # สคริปต์รันเซิร์ฟเวอร์ (npm start) และรันชุดทดสอบ (npm test)
+├── README.md                   # เอกสารแนะนำการติดตั้ง การใช้งาน และอธิบายสถาปัตยกรรม
+├── css/
+│   └── style.css               # Design System, ตัวแปรสี, ตารางเวลา, Modal และ Responsive Breakpoints
+├── js/
+│   ├── app.js                  # จุดเริ่มต้นแอป, ตั้งค่า Route, เมนูตามบทบาท และ Route Guard (adminOnly)
+│   ├── router.js               # Hash Router (#/path/:param?query)
+│   ├── db.js                   # IndexedDB Wrapper (Object Stores: rooms, bookings)
+│   ├── session.js              # จัดการสถานะ Admin Login และข้อมูลโปรไฟล์ผู้จองปัจจุบัน
+│   ├── seed.js                 # ข้อมูลตัวอย่างเริ่มต้น (ห้องปฏิบัติการ 5 ห้อง + การจอง 16 รายการ)
+│   ├── domain/
+│   │   ├── constants.js        # ค่าคงที่สถานะการจอง สถานะห้อง และประเภทผู้จอง
+│   │   └── rules.js            # ⭐ กฎธุรกิจหลัก: isOverlap, findConflicts, validateBooking, canUserCancel
+│   ├── services/
+│   │   ├── roomService.js      # บริการ CRUD ห้องปฏิบัติการ และตรวจสอบก่อนลบห้อง
+│   │   └── bookingService.js   # บริการสร้าง อนุมัติ ปฏิเสธ ยกเลิก ค้นหา และคำนวณสถิติการจอง
+│   ├── components/
+│   │   ├── roomCard.js         # คอมโพเนนต์การ์ดแสดงข้อมูลห้องปฏิบัติการ
+│   │   └── bookingDetail.js    # คอมโพเนนต์ Modal แสดงรายละเอียดการจองครบทุกฟิลด์
+│   ├── pages/                  # โมดูลหน้าจอทั้ง 10 หน้า (home, roomList, roomDetail, bookingForm,
+│   │                           # myBookings, schedule, login, adminBookings, adminRooms, dashboard)
+│   └── utils/                  # ฟังก์ชันช่วยเหลือด้านเวลา (time.js), การแสดงผล (format.js), DOM (dom.js)
+└── tests/
+    ├── overlap.test.js         # ชุดทดสอบ Unit Test สำหรับ rules.js (29 เทสต์)
+    └── service.test.js         # ชุดทดสอบ Integration/Service Test สำหรับ Service Layer (19 เทสต์)</code></pre>
+
+    <h2>3.2 อธิบายโค้ดหลักส่วนที่ 1: กฎธุรกิจและการตรวจสอบเวลาซ้ำซ้อน (<code>js/domain/rules.js</code>)</h2>
+    <p>
+      ไฟล์ <code>js/domain/rules.js</code> เป็น Pure Functions ที่ไม่พึ่งพา DOM หรือฐานข้อมูล ทำให้สามารถนำไปทดสอบและอธิบายการทำงานได้อย่างชัดเจน:
+    </p>
+    <pre><code>// 1. ฟังก์ชันแปลงเวลา "HH:MM" เป็นจำนวนนาทีนับจาก 00:00 (จาก js/utils/time.js)
+export function toMin(t) {
+  const [h, m] = String(t).split(':').map(Number);
+  return h * 60 + (m || 0); // เช่น "09:30" -> 9*60 + 30 = 570 นาที
+}
+
+// 2. ฟังก์ชันตรวจสอบว่าช่วงเวลาใหม่ทับซ้อนกับช่วงเวลาเดิมหรือไม่ (SRS ข้อ 14)
+export function isOverlap(newStart, newEnd, existingStart, existingEnd) {
+  return toMin(newStart) &lt; toMin(existingEnd) &amp;&amp; toMin(newEnd) &gt; toMin(existingStart);
+}
+
+// 3. ฟังก์ชันค้นหารายการจองที่ Approved แล้วซึ่งทับซ้อนกับคำขอใหม่ในห้องและวันเดียวกัน
+export function findConflicts(bookings, { room_id, booking_date, start_time, end_time, excludeId = null }) {
+  return bookings.filter(
+    (b) =&gt;
+      b.status === 'Approved' &amp;&amp;
+      b.id !== excludeId &amp;&amp;
+      b.room_id === room_id &amp;&amp;
+      b.booking_date === booking_date &amp;&amp;
+      isOverlap(start_time, end_time, b.start_time, b.end_time)
+  );
+}</code></pre>
+    <p>
+      <strong>จุดสำคัญของการออกแบบ:</strong> พารามิเตอร์ <code>excludeId</code> ถูกออกแบบมาเพื่อรองรับขั้นตอนที่ Admin กดปุ่ม <strong>"อนุมัติ"</strong> รายการที่อยู่ในสถานะ <code>Pending</code> โดยระบบจะเรียก <code>findConflicts</code> ซ้ำอีกครั้งโดยไม่นับตัวมันเอง เพื่อป้องกันกรณีที่มีคำขอ <code>Pending</code> 2 รายการในเวลาเดียวกันแล้ว Admin เผลอกดอนุมัติทั้งคู่
+    </p>
+  </section>
+
+  <!-- ==================== บทที่ 3 (ต่อ) Service Layer, DB, ข้อมูลตัวอย่าง ==================== -->
+  <section class="page-break">
+    <h2>3.3 อธิบายโค้ดหลักส่วนที่ 2: บริการจัดการการจอง (<code>js/services/bookingService.js</code>)</h2>
+    <p>
+      <code>bookingService.js</code> ทำหน้าที่เชื่อมโยงกฎจาก <code>rules.js</code> เข้ากับฐานข้อมูล <code>IndexedDB</code> โดยบังคับตรวจ Validation และตรวจเวลาซ้ำซ้อนทั้งตอนสร้างคำขอ (<code>create</code>) และตอนอนุมัติ (<code>approve</code>):
+    </p>
+    <pre><code>export const bookingService = {
+  /** สร้างคำขอจอง: 1) Validate ข้อมูล -> 2) ตรวจเวลาซ้ำซ้อน -> 3) บันทึกสถานะเริ่มต้นเป็น Pending */
+  async create(input) {
+    const room = await roomService.get(input.room_id);
+    const errors = validateBooking(input, room);
+    if (Object.keys(errors).length) return { ok: false, errors };
+
+    const conflicts = findConflicts(await this.list(), input);
+    if (conflicts.length) {
+      return { ok: false, errors: { start_time: conflictMessage(conflicts) }, conflicts };
+    }
+
+    const now = new Date().toISOString();
+    const booking = {
+      id: uid('bk'),
+      room_id: input.room_id,
+      requester_name: input.requester_name.trim(),
+      requester_email: input.requester_email.trim(),
+      requester_type: input.requester_type,
+      booking_date: input.booking_date,
+      start_time: input.start_time,
+      end_time: input.end_time,
+      purpose: input.purpose.trim(),
+      number_of_users: Number(input.number_of_users),
+      status: 'Pending',
+      admin_comment: '',
+      created_at: now,
+      updated_at: now,
+    };
+    await db.put('bookings', booking);
+    return { ok: true, booking };
+  },
+
+  /** Admin อนุมัติ — ตรวจทับซ้อนซ้ำอีกครั้งก่อนเปลี่ยนสถานะเป็น Approved */
+  async approve(id) {
+    const b = await this.get(id);
+    if (!b) return { ok: false, error: 'ไม่พบรายการจอง' };
+    if (b.status !== 'Pending') return { ok: false, error: 'อนุมัติได้เฉพาะรายการที่รออนุมัติ' };
+    const conflicts = findConflicts(await this.list(), { ...b, excludeId: b.id });
+    if (conflicts.length) return { ok: false, error: conflictMessage(conflicts) };
+    const updated = await this._update(id, { status: 'Approved', admin_comment: '' });
+    return { ok: true, booking: updated };
+  },
+};</code></pre>
+
+    <h2>3.4 ข้อมูลตัวอย่างห้องปฏิบัติการและการจองในระบบ (SRS ข้อ 11 และ ข้อ 23.6–23.7)</h2>
+    <p>
+      ตามข้อกำหนดการส่งงาน (SRS ข้อ 23) ระบบต้องมีข้อมูลห้องปฏิบัติการอย่างน้อย 3 ห้อง และข้อมูลการจองตัวอย่างอย่างน้อย 10 รายการ โดยในไฟล์ <code>js/seed.js</code> ได้จัดเตรียม <strong>ห้องปฏิบัติการครบทั้ง 5 ห้อง</strong> และ <strong>รายการจองตัวอย่าง 16 รายการ</strong> ดังนี้:
+    </p>
+
+    <div class="table-caption">ตารางที่ 3.1 ข้อมูลห้องปฏิบัติการตัวอย่างทั้ง 5 ห้องในระบบ (<code>buildSeedRooms</code>)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:105px;">รหัสห้อง</th>
+          <th style="width:185px;">ชื่อห้องปฏิบัติการ</th>
+          <th style="width:55px;">ความจุ</th>
+          <th>อุปกรณ์หลัก</th>
+          <th>สถานที่ตั้ง</th>
+          <th style="width:80px;">สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>CE-LAB-01</strong></td><td>Computer Engineering Lab 1</td><td>30 คน</td><td>Computer, Projector, Internet</td><td>อาคารวิศวกรรมศาสตร์ ชั้น 2 ห้อง 201</td><td>Available</td></tr>
+        <tr><td><strong>CE-LAB-02</strong></td><td>Computer Engineering Lab 2</td><td>25 คน</td><td>Computer, Smart TV, Internet</td><td>อาคารวิศวกรรมศาสตร์ ชั้น 2 ห้อง 202</td><td>Available</td></tr>
+        <tr><td><strong>NET-LAB</strong></td><td>Network Laboratory</td><td>20 คน</td><td>Router, Switch, Network Cable, Rack</td><td>อาคารวิศวกรรมศาสตร์ ชั้น 3 ห้อง 305</td><td>Available</td></tr>
+        <tr><td><strong>IOT-LAB</strong></td><td>IoT and Embedded Systems Lab</td><td>20 คน</td><td>Arduino, ESP32, Sensor Kit, Oscilloscope</td><td>อาคารวิศวกรรมศาสตร์ ชั้น 3 ห้อง 306</td><td>Available</td></tr>
+        <tr><td><strong>PROJECT-ROOM</strong></td><td>Student Project Room</td><td>10 คน</td><td>Whiteboard, Meeting Table, Power Outlet</td><td>อาคารวิศวกรรมศาสตร์ ชั้น 1 ห้อง 105</td><td>Available</td></tr>
+      </tbody>
+    </table>
+
+    <div class="table-caption">ตารางที่ 3.2 ข้อมูลการจองตัวอย่าง 16 รายการในระบบ (<code>buildSeedBookings</code> — อิงวันที่สัมพัทธ์จากวันที่เปิดใช้งาน)</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:52px;">รหัส</th>
+          <th style="width:88px;">ห้อง</th>
+          <th style="width:68px;">วันที่</th>
+          <th style="width:82px;">ช่วงเวลา</th>
+          <th style="width:130px;">ผู้จอง (บทบาท)</th>
+          <th>วัตถุประสงค์การใช้งาน</th>
+          <th style="width:82px;">สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>bk-01</code></td><td>CE-LAB-01</td><td>วันนี้</td><td>09:00–11:00</td><td>อ.สุดา (Teacher)</td><td>สอนปฏิบัติการวิชาโครงสร้างข้อมูล (28 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-02</code></td><td>CE-LAB-01</td><td>วันนี้</td><td>13:00–15:00</td><td>สมชาย (Student)</td><td>ติวสอบกลางภาควิชา Programming (20 คน)</td><td><span class="badge b-pending">Pending</span></td></tr>
+        <tr><td><code>bk-03</code></td><td>CE-LAB-01</td><td>วันนี้</td><td>13:30–14:30</td><td>อนันต์ (Student)</td><td>ซ้อมนำเสนอโปรเจกต์ (6 คน — ทดสอบ Pending ซ้อนกัน)</td><td><span class="badge b-pending">Pending</span></td></tr>
+        <tr><td><code>bk-04</code></td><td>CE-LAB-01</td><td>+1 วัน</td><td>10:00–12:00</td><td>อ.วิชัย (Teacher)</td><td>สอบปฏิบัติวิชาฐานข้อมูล (30 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-05</code></td><td>CE-LAB-01</td><td>+3 วัน</td><td>08:30–10:30</td><td>มาลี (Student)</td><td>อบรมการใช้ Git และ GitHub (15 คน)</td><td><span class="badge b-pending">Pending</span></td></tr>
+        <tr><td><code>bk-06</code></td><td>CE-LAB-01</td><td>+4 วัน</td><td>13:00–16:00</td><td>อ.สุดา (Teacher)</td><td>สอนชดเชยวิชาอัลกอริทึม (25 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-07</code></td><td>CE-LAB-02</td><td>วันนี้</td><td>10:00–12:00</td><td>พิมพ์ใจ (Staff)</td><td>อบรมระบบสารสนเทศสำหรับเจ้าหน้าที่ (20 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-08</code></td><td>CE-LAB-02</td><td>+1 วัน</td><td>13:00–16:00</td><td>สมชาย (Student)</td><td>เวิร์กช็อป Web Development (18 คน)</td><td><span class="badge b-pending">Pending</span></td></tr>
+        <tr><td><code>bk-09</code></td><td>CE-LAB-02</td><td>-1 วัน</td><td>13:00–15:00</td><td>อนันต์ (Student)</td><td>ทำงานกลุ่มวิชา Software Engineering (12 คน)</td><td><span class="badge b-rejected">Rejected</span></td></tr>
+        <tr><td><code>bk-10</code></td><td>NET-LAB</td><td>+1 วัน</td><td>09:00–12:00</td><td>อ.วิชัย (Teacher)</td><td>Workshop Cisco Packet Tracer (20 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-11</code></td><td>NET-LAB</td><td>+2 วัน</td><td>13:00–15:30</td><td>มาลี (Student)</td><td>ฝึกตั้งค่า VLAN สำหรับสอบ CCNA (10 คน)</td><td><span class="badge b-rejected">Rejected</span></td></tr>
+        <tr><td><code>bk-12</code></td><td>NET-LAB</td><td>-2 วัน</td><td>09:00–11:00</td><td>อ.สุดา (Teacher)</td><td>สอนปฏิบัติวิชาเครือข่ายคอมพิวเตอร์ (18 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-13</code></td><td>IOT-LAB</td><td>+2 วัน</td><td>09:00–12:00</td><td>อ.วิชัย (Teacher)</td><td>ปฏิบัติการ ESP32 กับ MQTT (20 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-14</code></td><td>IOT-LAB</td><td>+3 วัน</td><td>14:00–16:00</td><td>สมชาย (Student)</td><td>ทดสอบเซนเซอร์โปรเจกต์ Smart Farm (5 คน)</td><td><span class="badge b-pending">Pending</span></td></tr>
+        <tr><td><code>bk-15</code></td><td>PROJECT-ROOM</td><td>วันนี้</td><td>14:00–16:00</td><td>อนันต์ (Student)</td><td>ประชุมทีมโปรเจกต์จบ (8 คน)</td><td><span class="badge b-approved">Approved</span></td></tr>
+        <tr><td><code>bk-16</code></td><td>PROJECT-ROOM</td><td>+1 วัน</td><td>09:00–10:30</td><td>มาลี (Student)</td><td>ติวหนังสือกลุ่ม (6 คน — ผู้จองยกเลิกเอง)</td><td><span class="badge b-cancelled">Cancelled</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== บทที่ 4 การทดสอบระบบและคู่มือใช้งาน ==================== -->
+  <section class="page-break">
+    <div class="chapter-header">
+      <span class="ch-num">Chapter 4 · System Testing &amp; User Manual</span>
+      <h1>บทที่ 4 การทดสอบระบบและคู่มือการใช้งาน</h1>
+    </div>
+
+    <h2>4.1 การทดสอบระดับหน่วยและระดับบริการ (Automated Unit &amp; Service Tests)</h2>
+    <p>
+      ระบบมีชุดทดสอบอัตโนมัติในโฟลเดอร์ <code>tests/</code> จำนวนรวม <strong>48 ชุดทดสอบ</strong> แบ่งออกเป็น
+      <code>tests/overlap.test.js</code> (29 เทสต์) และ <code>tests/service.test.js</code> (19 เทสต์) ซึ่งผลการรันผ่านครบทุกข้อดังนี้:
+    </p>
+    <pre><code>$ node tests/overlap.test.js &amp;&amp; node tests/service.test.js
+isOverlap — ตัวอย่างตาม SRS ข้อ 14
+  ✓ 09:00–11:00 vs 10:00–12:00 =&gt; ซ้ำซ้อน
+  ✓ 09:00–11:00 vs 08:00–09:30 =&gt; ซ้ำซ้อน
+  ✓ 09:00–11:00 vs 11:00–12:00 =&gt; ไม่ซ้ำซ้อน (ต่อกันพอดี)
+  ✓ 13:00–15:00 vs 09:00–12:00 =&gt; ไม่ซ้ำซ้อน
+isOverlap — กรณีขอบ (เวลาเหมือนกัน, ช่วงใหม่ครอบช่วงเดิม, ช่วงใหม่อยู่ในช่วงเดิม, ต่อกันด้านหน้า, เทียบตัวเลข)
+  ✓ ผ่านครบ 5 กรณีขอบ
+findConflicts &amp; validateBooking &amp; canUserCancel &amp; countByStatus
+  ✓ ผ่านครบ 20 กรณีทดสอบ (รวมผ่านทั้งหมด 29 เทสต์)
+
+seed / create / approve / reject / cancel / search / rooms (service.test.js)
+  ✓ มีห้อง &gt;= 3 และการจอง &gt;= 10, ข้อมูลตัวอย่างไม่มี Approved ทับซ้อนกันเอง
+  ✓ จองสำเร็จ =&gt; สถานะ Pending, จองชนกับ Approved =&gt; ถูกปฏิเสธ, จองต่อกันพอดี =&gt; สำเร็จ
+  ✓ อนุมัติรายการที่ชนกับ Approved ไม่ได้, ปฏิเสธต้องมีเหตุผล, User/Admin ยกเลิกได้ตามสิทธิ์
+  ✓ ค้นหา/กรองตามห้อง วันที่ สถานะ และ CRUD ห้องปฏิบัติการ (รวมผ่านทั้งหมด 19 เทสต์)</code></pre>
+
+    <h2>4.2 การตรวจสอบตามเกณฑ์ตรวจรับระบบ (Acceptance Criteria — SRS ข้อ 20)</h2>
+    <div class="table-caption">ตารางที่ 4.1 ผลการตรวจรับระบบเทียบกับเกณฑ์ขั้นต่ำ 13 ข้อ ตาม SRS ข้อ 20</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:45px;">ข้อ</th>
+          <th>เกณฑ์การตรวจรับ (Acceptance Criteria)</th>
+          <th style="width:95px;">สถานะ</th>
+          <th>หลักฐาน / การทำงานในระบบ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>ผู้ใช้สามารถดูรายการห้องปฏิบัติการได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>แสดงการ์ดห้องพร้อมตัวกรองและช่องค้นหาในหน้า <code>#/rooms</code></td></tr>
+        <tr><td>2</td><td>ผู้ใช้สามารถส่งคำขอจองห้องได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>แบบฟอร์มจองห้องที่หน้า <code>#/book</code> พร้อม Validation ครบทุกฟิลด์</td></tr>
+        <tr><td>3</td><td>ระบบสามารถบันทึกข้อมูลการจองได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>บันทึกลงฐานข้อมูล IndexedDB (<code>LabBookingDB.bookings</code>)</td></tr>
+        <tr><td>4</td><td>ระบบตรวจสอบการจองซ้ำซ้อนในห้องและเวลาทับซ้อนได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>ตรวจสอบด้วย <code>isOverlap</code> และแจ้งเตือนแบบ Real-time บนฟอร์ม</td></tr>
+        <tr><td>5</td><td>ไม่อนุญาตให้จองห้องที่เวลาทับซ้อนกับรายการที่ Approved แล้ว</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>บล็อกทั้งตอนส่งคำขอจอง และบล็อกปุ่มอนุมัติในหน้า Admin</td></tr>
+        <tr><td>6</td><td>Admin สามารถอนุมัติและปฏิเสธคำขอจองได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>จัดการได้ที่หน้า <code>#/admin/bookings</code> พร้อมบังคับใส่เหตุผลเมื่อปฏิเสธ</td></tr>
+        <tr><td>7</td><td>ระบบสามารถแสดงรายการจองตามสถานะได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>มีแท็บกรองตามสถานะทั้งในหน้า <code>#/my</code> และ <code>#/admin/bookings</code></td></tr>
+        <tr><td>8</td><td>ระบบสามารถค้นหาและกรองรายการจองได้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>ค้นหาตามชื่อ/อีเมล/วัตถุประสงค์ และกรองตามห้อง วันที่ สถานะ</td></tr>
+        <tr><td>9</td><td>ระบบมีตารางการจองรายวันหรือรายสัปดาห์</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>หน้า <code>#/schedule</code> สลับมุมมองรายวัน (แยกตามห้อง) และรายสัปดาห์ได้</td></tr>
+        <tr><td>10</td><td>ระบบมี Dashboard สรุปจำนวนการจองตามสถานะ</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>หน้า <code>#/admin/dashboard</code> แสดงตัวเลขสรุป กราฟวงกลม และกราฟแท่ง</td></tr>
+        <tr><td>11</td><td>ระบบมี UI ที่ใช้งานง่ายและรองรับมือถือ</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>ออกแบบ Responsive CSS รองรับทั้ง Desktop, Tablet และ Mobile</td></tr>
+        <tr><td>12</td><td>ระบบถูก Deploy และเข้าถึงผ่าน URL ได้จริง</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>เชื่อมต่อ GitHub Repository <code>Newphakhin/esfsdfsdf</code> พร้อม Deploy</td></tr>
+        <tr><td>13</td><td>มี README อธิบายวิธีติดตั้ง วิธีใช้งาน และเครื่องมือ AI ที่ใช้</td><td><span class="badge b-pass">✓ ผ่าน</span></td><td>จัดทำ <code>README.md</code> และเล่มรายงานฉบับสมบูรณ์เรียบร้อย</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== บทที่ 4 (ต่อ) ภาพหน้าจอระบบ 1–4 ==================== -->
+  <section class="page-break">
+    <h2>4.3 คู่มือการใช้งานและภาพหน้าจอหลักของระบบ (SRS ข้อ 16 และ ข้อ 23.4)</h2>
+    <p>ระบบประกอบด้วยหน้าจอหลักครบทั้ง 10 หน้าจอ ตามข้อกำหนด SRS ข้อ 16 โดยแสดงภาพหน้าจอจากการทำงานจริงของระบบดังนี้:</p>
+
+    <div class="figure-card">
+      <img src="../screenshots/01-home.png" alt="Home Page" />
+      <div class="figure-caption">ภาพที่ 4.1 หน้าแรกของระบบ (Home Page — <code>#/</code>)</div>
+      <div class="figure-desc">แสดงแบนเนอร์แนะนำระบบ ปุ่มลัดเข้าสู่หน้าจองห้องและตารางการจอง การ์ดสรุปภาพรวม (ห้องที่พร้อมใช้งาน การจองวันนี้ คำขอรออนุมัติ) และรายการห้องปฏิบัติการแนะนำ</div>
+    </div>
+
+    <div class="figure-card">
+      <img src="../screenshots/02-rooms.png" alt="Lab Room List Page" />
+      <div class="figure-caption">ภาพที่ 4.2 หน้ารายการห้องปฏิบัติการทั้งหมด (Lab Room List Page — <code>#/rooms</code>)</div>
+      <div class="figure-desc">แสดงการ์ดห้องปฏิบัติการทั้ง 5 ห้อง พร้อมรหัสห้อง ชื่อห้อง สถานที่ตั้ง ความจุ รายการอุปกรณ์ สถานะห้อง และช่องค้นหา/กรองตามสถานะแบบทันที</div>
+    </div>
+  </section>
+
+  <!-- ==================== บทที่ 4 (ต่อ) ภาพหน้าจอระบบ 3–6 ==================== -->
+  <section class="page-break">
+    <div class="figure-card">
+      <img src="../screenshots/03-room-detail.png" alt="Lab Room Detail Page" />
+      <div class="figure-caption">ภาพที่ 4.3 หน้ารายละเอียดห้องปฏิบัติการ (Lab Room Detail Page — <code>#/rooms/room-ce1</code>)</div>
+      <div class="figure-desc">แสดงข้อมูลเชิงลึกของห้องปฏิบัติการ อุปกรณ์ทั้งหมด คำอธิบายห้อง และรายการจองที่ได้รับการอนุมัติแล้วในช่วง 7 วันข้างหน้า พร้อมปุ่มกดจองห้อง</div>
+    </div>
+
+    <div class="figure-card">
+      <img src="../screenshots/04-booking-form.png" alt="Booking Form Page" />
+      <div class="figure-caption">ภาพที่ 4.4 หน้าแบบฟอร์มส่งคำขอจองห้องและระบบแจ้งเตือนเวลาทับซ้อนแบบ Real-time (<code>#/book</code>)</div>
+      <div class="figure-desc">เมื่อผู้ใช้เลือกห้อง วันที่ และช่วงเวลา (เช่น 09:30–11:30 น. ซึ่งชนกับรายการที่อนุมัติแล้วช่วง 09:00–11:00 น.) ระบบจะแสดงกล่องแจ้งเตือนสีเหลืองทันทีพร้อมแสดงช่วงเวลาที่ถูกจองแล้วทางด้านขวา</div>
+    </div>
+  </section>
+
+  <!-- ==================== บทที่ 4 (ต่อ) ภาพหน้าจอระบบ 5–8 ==================== -->
+  <section class="page-break">
+    <div class="figure-card">
+      <img src="../screenshots/05-my-bookings.png" alt="My Booking Page" />
+      <div class="figure-caption">ภาพที่ 4.5 หน้าการจองของฉัน (My Booking Page — <code>#/my</code>)</div>
+      <div class="figure-desc">แสดงรายการคำขอจองของผู้ใช้ตามอีเมลที่ระบุ มีแท็บกรองตามสถานะ แสดงเหตุผลจากผู้ดูแลระบบ และมีปุ่ม "ยกเลิกการจอง" สำหรับรายการที่ยังไม่ถึงเวลาเริ่มใช้งาน</div>
+    </div>
+
+    <div class="figure-card">
+      <img src="../screenshots/06-schedule.png" alt="Booking Schedule Page" />
+      <div class="figure-caption">ภาพที่ 4.6 หน้าตารางการจองรายวันและรายสัปดาห์ (Booking Schedule Page — <code>#/schedule</code>)</div>
+      <div class="figure-desc">แสดงตารางเวลาแบบ Visual Timeline แยกตามห้องปฏิบัติการ (มุมมองรายวัน) หรือแยกตามวันจันทร์–อาทิตย์ (มุมมองรายสัปดาห์) สามารถกรองตามห้องและสถานะได้</div>
+    </div>
+  </section>
+
+  <!-- ==================== บทที่ 4 (ต่อ) ภาพหน้าจอระบบ 7–10 ==================== -->
+  <section class="page-break">
+    <div class="figure-card">
+      <img src="../screenshots/07-login.png" alt="Admin Login Page" />
+      <div class="figure-caption">ภาพที่ 4.7 หน้าเข้าสู่ระบบสำหรับผู้ดูแลระบบ (Admin Login Page — <code>#/login</code>)</div>
+      <div class="figure-desc">ป้องกันการเข้าถึงหน้าจัดการของ Admin ตามข้อกำหนด NFR-05 โดยผู้ดูแลระบบใช้รหัสผ่าน <code>admin123</code> เพื่อเข้าสู่โหมดผู้ดูแลระบบ</div>
+    </div>
+
+    <div class="figure-card">
+      <img src="../screenshots/08-admin-dashboard.png" alt="Admin Dashboard Page" />
+      <div class="figure-caption">ภาพที่ 4.8 หน้าสรุปข้อมูลผู้ดูแลระบบ (Dashboard Page — <code>#/admin/dashboard</code>)</div>
+      <div class="figure-desc">แสดงจำนวนการจองทั้งหมดแยกตามสถานะ แผนภูมิวงกลม (Chart.js Doughnut Chart) แผนภูมิแท่งแสดงจำนวนการจองแยกตามห้อง รายการรออนุมัติล่าสุด และการจองที่กำลังจะถึง</div>
+    </div>
+  </section>
+
+  <!-- ==================== บทที่ 4 (ต่อ) ภาพหน้าจอระบบ 9–10 ==================== -->
+  <section class="page-break">
+    <div class="figure-card">
+      <img src="../screenshots/09-admin-bookings.png" alt="Admin Booking Management Page" />
+      <div class="figure-caption">ภาพที่ 4.9 หน้าจัดการคำขอจองของผู้ดูแลระบบ (Admin Booking Management Page — <code>#/admin/bookings</code>)</div>
+      <div class="figure-desc">แสดงรายการคำขอจองทั้งหมดพร้อมช่องค้นหา ตัวกรองห้อง/วันที่/สถานะ และปุ่ม "อนุมัติ", "ปฏิเสธ" (พร้อมกล่องกรอกเหตุผล) และ "ยกเลิก"</div>
+    </div>
+
+    <div class="figure-card">
+      <img src="../screenshots/10-admin-rooms.png" alt="Admin Room Management Page" />
+      <div class="figure-caption">ภาพที่ 4.10 หน้าจัดการข้อมูลห้องปฏิบัติการ (Admin Room Management Page — <code>#/admin/rooms</code>)</div>
+      <div class="figure-desc">รองรับการเพิ่มห้องใหม่ แก้ไขรายละเอียด/ความจุ/อุปกรณ์/สถานะห้อง และลบห้องปฏิบัติการ (มีระบบป้องกันการลบห้องที่ยังมีการจองค้างอยู่)</div>
+    </div>
+  </section>
+
+  <!-- ==================== บทที่ 5 สรุปผลการดำเนินงานและ AI Tools ==================== -->
+  <section class="page-break">
+    <div class="chapter-header">
+      <span class="ch-num">Chapter 5 · Conclusion, AI Tools Usage &amp; Deployment</span>
+      <h1>บทที่ 5 สรุปผลการดำเนินงานและการใช้ AI Tools ในการพัฒนา</h1>
+    </div>
+
+    <h2>5.1 สรุปผลการพัฒนาโปรเจกต์และผลลัพธ์การเรียนรู้ (SRS ข้อ 18 และ ข้อ 24)</h2>
+    <p>
+      จากการพัฒนาโปรเจกต์ <strong>Simple Booking System for Lab Room</strong> ระบบสามารถทำงานได้ครบถ้วนตามเกณฑ์ <strong>Minimum Viable Product (MVP)</strong> ทั้ง 11 ข้อ และบรรลุผลลัพธ์การเรียนรู้ (Learning Outcomes) ทั้ง 10 ข้อตามเอกสาร SRS ได้แก่:
+    </p>
+    <ul>
+      <li>พัฒนาเว็บแอปพลิเคชันที่มีฟังก์ชัน CRUD ทั้งข้อมูลห้องปฏิบัติการและข้อมูลการจองได้อย่างสมบูรณ์</li>
+      <li>ออกแบบตรรกะการตรวจสอบเวลาจองซ้ำซ้อน (Overlap Detection) และจัดการฟอร์มพร้อม Validation ได้อย่างรัดกุม</li>
+      <li>พัฒนา Role-based View แยกมุมมองผู้ใช้งานทั่วไป (User) และผู้ดูแลระบบ (Admin) พร้อมระบบป้องกันสิทธิ์เข้าถึง</li>
+      <li>สร้าง Dashboard สรุปข้อมูลสถิติและตารางแสดงผลเวลาการจองรายวัน/รายสัปดาห์ที่รองรับหน้าจอมือถือ (Responsive UI)</li>
+    </ul>
+
+    <h2>5.2 สรุปการใช้ AI Tools ในการพัฒนา (ตามข้อกำหนด SRS ข้อ 22 และ ข้อ 23.8)</h2>
+    <p>
+      ในการพัฒนาโปรเจกต์นี้ ผู้จัดทำได้ประยุกต์ใช้เครื่องมือ AI Coding Assistant (<strong>Antigravity</strong>) เพื่อเพิ่มประสิทธิภาพในกระบวนการวิศวกรรมซอฟต์แวร์ โดยผู้จัดทำได้ตรวจสอบ ทดสอบ และทำความเข้าใจโค้ดหลักทั้งหมดด้วยตนเอง ดังสรุปในตารางที่ 5.1:
+    </p>
+
+    <div class="table-caption">ตารางที่ 5.1 สรุปบทบาทการใช้ AI Tools ในแต่ละขั้นตอนการพัฒนาโปรเจกต์</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:45px;">ลำดับ</th>
+          <th style="width:190px;">ขั้นตอนตามแนวทาง SRS ข้อ 22</th>
+          <th>รายละเอียดการใช้ AI Tools ช่วยพัฒนา</th>
+          <th style="width:170px;">การตรวจสอบโดยผู้พัฒนา</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>ออกแบบ Project Structure</td><td>ช่วยวางโครงสร้างแบบแยกชั้น (<code>pages/</code>, <code>services/</code>, <code>domain/</code>, <code>components/</code>, <code>utils/</code>)</td><td>ตรวจสอบการแยก Module และการ Import</td></tr>
+        <tr><td>2</td><td>ออกแบบ Database Schema</td><td>ช่วยออกแบบโครงสร้าง Object Stores (<code>rooms</code>, <code>bookings</code>) และ Indexes ใน <code>js/db.js</code></td><td>ตรวจสอบฟิลด์ให้ตรงกับ SRS ข้อ 10</td></tr>
+        <tr><td>3</td><td>สร้าง Component &amp; Function</td><td>ช่วยเขียน ES Modules สำหรับหน้าเว็บทั้ง 10 หน้า และ Reusable Modal/Toast</td><td>ทดสอบการแสดงผลและการเปลี่ยนหน้า</td></tr>
+        <tr><td>4</td><td>เขียน Booking Form Validation</td><td>ช่วยเขียนฟังก์ชัน <code>validateBooking</code> และ <code>validateRoom</code> ตรวจข้อมูลครบทุกเงื่อนไข</td><td>ทดสอบกรอกข้อมูลผิดรูปแบบและข้อมูลว่าง</td></tr>
+        <tr><td>5</td><td>เขียน Logic ตรวจสอบเวลาทับซ้อน</td><td>ช่วยเขียนฟังก์ชัน <code>isOverlap</code> และ <code>findConflicts</code> ใน <code>js/domain/rules.js</code></td><td>คำนวณมือเปรียบเทียบและรัน Unit Test 29 ข้อ</td></tr>
+        <tr><td>6</td><td>สร้าง Dashboard Layout</td><td>ช่วยเชื่อมต่อ Chart.js แสดงกราฟ Doughnut และกราฟแท่งเปรียบเทียบรายห้อง</td><td>ตรวจสอบยอดรวมตามสถานะให้ตรงกับข้อมูลจริง</td></tr>
+        <tr><td>7</td><td>Debug Error &amp; Async Flow</td><td>ช่วยปรับปรุงชุดทดสอบ <code>tests/service.test.js</code> ให้รองรับการทำงานแบบ Async กับ IndexedDB</td><td>รันชุดทดสอบผ่านครบ 48 เทสต์</td></tr>
+        <tr><td>8</td><td>สร้าง Sample Data</td><td>ช่วยสร้างข้อมูลห้องปฏิบัติการ 5 ห้อง และรายการจองตัวอย่าง 16 รายการใน <code>js/seed.js</code></td><td>ตรวจสอบความสมจริงและสถานะการจอง</td></tr>
+        <tr><td>9</td><td>ปรับ UI ให้เป็น Responsive</td><td>ช่วยจัดทำ Media Queries ใน <code>css/style.css</code> สำหรับแสดงตารางเป็นการ์ดบนมือถือ</td><td>ทดสอบย่อ-ขยายหน้าจอบนเบราว์เซอร์</td></tr>
+        <tr><td>10</td><td>จัดทำ README และเล่มรายงาน</td><td>ช่วยเรียบเรียงเอกสารคู่มือ <code>README.md</code> และจัดทำเล่มรายงานฉบับสมบูรณ์</td><td>ตรวจทานเนื้อหาและความถูกต้องทั้งหมด</td></tr>
+      </tbody>
+    </table>
+
+    <h2>5.3 การติดตั้ง การใช้งาน และการนำขึ้นระบบจริง (Deployment &amp; Deliverables — SRS ข้อ 23)</h2>
+    <div class="info-box">
+      <strong>ข้อมูลการส่งงาน (Deliverables Summary):</strong>
+      <ul style="margin-bottom:0;">
+        <li><strong>ผู้จัดทำ:</strong> นาย ภคิน ภารสมบูรณ์ (สาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์)</li>
+        <li><strong>อาจารย์ประจำวิชา:</strong> อาจารย์ วรพจน์ สมมูล</li>
+        <li><strong>GitHub Repository:</strong> <a href="https://github.com/Newphakhin/esfsdfsdf" style="color:var(--accent);">https://github.com/Newphakhin/esfsdfsdf</a></li>
+        <li><strong>คำสั่งรันระบบในเครื่อง (Local Server):</strong> <code>npx serve .</code> หรือ <code>python -m http.server 5173</code></li>
+        <li><strong>คำสั่งรันชุดทดสอบอัตโนมัติ:</strong> <code>node tests/overlap.test.js &amp;&amp; node tests/service.test.js</code></li>
+        <li><strong>การ Deploy ขึ้น URL สาธารณะ:</strong> เชื่อมต่อ Repository <code>Newphakhin/esfsdfsdf</code> เข้ากับ <strong>GitHub Pages, Vercel หรือ Netlify</strong> โดยตั้งค่า Publish Directory เป็น <code>.</code> (Root) ได้ทันทีโดยไม่ต้องใช้คำสั่ง Build</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>

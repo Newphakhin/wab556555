@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ระบบจองห้องปฏิบัติการ | Lab Room Booking — วิศวกรรมคอมพิวเตอร์ ม.กาฬสินธุ์</title>
+  <meta name="description" content="Simple Booking System for Lab Room — ระบบจองห้องปฏิบัติการสาขาวิชาวิศวกรรมคอมพิวเตอร์ ตรวจห้องว่าง ส่งคำขอจอง ป้องกันการจองซ้ำซ้อน และติดตามสถานะได้ทันที" />
+  <meta name="theme-color" content="#070a16" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#/" aria-label="หน้าแรก Lab Room Booking">
+        <span class="brand-logo" aria-hidden="true">🧪</span>
+        <span class="brand-text">Lab Room Booking<small>วิศวกรรมคอมพิวเตอร์ ม.กาฬสินธุ์</small></span>
+      </a>
+      <nav class="nav" id="mainNav" aria-label="เมนูหลัก"></nav>
+      <div class="role-switch" id="authMenu" role="group" aria-label="เมนูระบบ">
+        <!-- Rendered by app.js -->
+      </div>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="เปิด/ปิดเมนู" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main id="app" class="container" tabindex="-1"></main>
+
+  <footer class="footer">
+    <div class="container row">
+      <span>© Simple Booking System for Lab Room — สาขาวิชาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยกาฬสินธุ์</span>
+      <span>ข้อมูลเก็บในเบราว์เซอร์ (IndexedDB) · <button class="link-btn" id="resetData" type="button">รีเซ็ตข้อมูลตัวอย่าง</button></span>
+    </div>
+  </footer>
+
+  <div id="toastRoot" aria-live="polite"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
